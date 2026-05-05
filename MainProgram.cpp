@@ -1,3 +1,125 @@
+// ============================================================
+// Lab: Dynamic Memory Management & Static Classes
+// Course: Object-Oriented Programming for Engineers
+// Level: 2nd Year Engineering
+// Duration: 50 minutes
+// ============================================================
+// This file contains ALL code for this lab.
+// Do NOT create any .h files. Everything stays here.
+// ============================================================
+ 
+#include <iostream>
+#include <string>
+#include <cstring>
+ 
+using namespace std;
+ 
+// ================================================================
+// CLASS DEFINITIONS
+// ================================================================
+ 
+// -------------------------------------------------
+// Class: IntArray
+// Purpose: A dynamic integer array that manages
+//          its own memory using new/delete.
+// -------------------------------------------------
+class IntArray {
+private:
+    int* data;       // pointer to dynamically allocated array
+    int  capacity;   // maximum number of elements
+    int  count;      // current number of elements
+ 
+public:
+    // Constructor: allocate array of given capacity
+    IntArray(int cap);
+ 
+    // Destructor: free dynamically allocated memory
+    ~IntArray();
+    // Copy Constructor: deep copy another IntArray
+    IntArray(const IntArray& other);
+    
+ 
+    // Copy Assignment Operator: deep copy with self-assignment check
+    IntArray& operator=(const IntArray& other);
+ 
+ 
+    // Add an element to the end. Return true if successful, false if full.
+    bool add(int value);
+ 
+    // Get element at index. Return -1 if index is out of bounds.
+    int get(int index) const;
+ 
+    // Return current number of elements
+    int size() const;
+ 
+    // Return the capacity
+    int getCapacity() const;
+ 
+    // Check if the array is empty
+    bool isEmpty() const;
+ 
+    // Remove the last element. Return true if successful, false if empty.
+    bool removeLast();
+};
+ 
+// -------------------------------------------------
+// Class: Tracker
+// Purpose: A static utility class that counts how
+//          many IntArray objects currently exist.
+//          Cannot be instantiated.
+// -------------------------------------------------
+class Tracker {
+private:
+    static int objectCount;
+ 
+    // Private constructor prevents instantiation
+    Tracker() = delete;
+ 
+public:
+    // Increment the counter (call from IntArray constructor)
+    static void objectCreated();
+ 
+    // Decrement the counter (call from IntArray destructor)
+    static void objectDestroyed();
+ 
+    // Return current count of live IntArray objects
+    static int getActiveCount();
+ 
+    // Reset counter to zero (for testing purposes)
+    static void resetCount();
+};
+ 
+// ================================================================
+// STATIC MEMBER INITIALIZATION
+// ================================================================
+ 
+// TODO 1: Initialize Tracker's static member variable
+int Tracker::objectCount = 0;
+ 
+ 
+// ================================================================
+// TRACKER FUNCTION IMPLEMENTATIONS
+// ================================================================
+ 
+void Tracker::objectCreated() {
+    // TODO 2: Increment objectCount
+        objectCount++;
+}
+ 
+void Tracker::objectDestroyed() {
+    // TODO 3: Decrement objectCount
+    objectCount--;
+}
+ 
+int Tracker::getActiveCount() {
+    // TODO 4: Return objectCount
+    return objectCount;
+}
+ 
+void Tracker::resetCount() {
+    // TODO 5: Reset objectCount to 0
+    objectCount = 0;
+}
  
 // ================================================================
 // INTARRAY FUNCTION IMPLEMENTATIONS
